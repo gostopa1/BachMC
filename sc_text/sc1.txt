@@ -1,0 +1,12 @@
+(
+MIDIClient.init;
+MIDIIn.connectAll;
+//MIDIOut.connect[];
+
+// Create task
+t = Task({
+
+
+	// Set attributes of each node
+	// [freq, dur, [[next_state, weighted_random],…]]
+	var node_list =
