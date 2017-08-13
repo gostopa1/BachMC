@@ -1,4 +1,5 @@
-addpath mc_files\
+figure(1)
+clf
 
 trmat=mc_model(data(:,1),1);
 imagesc(trmat)
@@ -8,9 +9,10 @@ ylabel('Notes')
 title('Note transition matrix')
 colorbar
 
-%%
+%% Make figures regarding the MC transition matrix
 
-addpath mc_files\
+figure(2)
+clf
 [u,ub]=make_pats(data);
 trmat=mc_model(data(:,1),1);
 imagesc(trmat)
@@ -25,26 +27,22 @@ xlabel('Note pattern index')
 ylabel('Notes')
 title('Note patterns in ascending order')
 %%
-filename='entrtanr.mid';
-%filename='gnossi.mid';
-%filename='breezefa.mid';
-%filename='bartok_romanian.mid';
+figure(3)
+clf
+filename='./original_midis/breezefa.mid';
 midi=readmidi(filename);
 
 Notes = midiInfo(midi,0);
-%num_of_notes=2700;
 num_of_notes=size(Notes,1);
 [PR,t,nn] = piano_roll(Notes(1:num_of_notes,:),1);
-figure(1)
+
 subplot(2,1,1)
 imagesc(t,nn,PR)
 xlabel('Time')
 ylabel('Notes')
 title('Original Composition')
 
-filename='resultmidis\entrtanr_2.mid'
-%filename='resultmidis\gnossi_2.mid'
-
+filename='resultmidis\breezefa_2.mid'
 midi=readmidi(filename);
 Notes = midiInfo(midi,0);
 num_of_notes=size(Notes,1);

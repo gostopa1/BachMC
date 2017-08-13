@@ -1,0 +1,1 @@
+This is a Markov Chain MIDI file analyzer that also generates new sequences.

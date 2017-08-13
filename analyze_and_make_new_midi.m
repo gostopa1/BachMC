@@ -1,39 +1,25 @@
 %% This script reads the MIDI, analyzes it and generates a new composition
 
-
 clear
-addpath('./src')
-addpath('./mc_files')
-addpath('./functions')
-prefix='./original_midis/';
-%filename='deb_clai.mid';
-%filename='deb_clai.mid';
-%filename='bartok_romanian.mid';
-
+addpath('./src') % Importing the MATLAB MIDI toolbox by Ken Schutte (http://kenschutte.com/midi)
+%addpath('./mc_files')
+addpath('./functions') %
+prefix='./original_midis/'; % Where the original midis are stored (that are used for the analysis)
 
 %% Reading files
-%filename=[prefix 'entrtanr.mid'];
-%filename='gnossi.mid';
 filename='breezefa.mid';
-filename='entrtanr.mid'
+%filename='entrtanr.mid'
 %filename='bumble_bee.mid'
 %filename='furelise.mid'
-
-
-%filename='joey.mid';
-%filename='bartok_romanian.mid';
-%filename='take5.mid';
-%filename='deb_clai.mid';
 midi=readmidi([prefix filename]);
 
+Notes = midiInfo(midi,0);% Take all information from the MIDI file.
 
-Notes = midiInfo(midi,0);
-%num_of_notes=2700;
-num_of_notes=size(Notes,1);
+num_of_notes=size(Notes,1); % Find the number of notes in the midi file
 %num_of_notes=700;
 [PR,t,nn] = piano_roll(Notes(1:num_of_notes,:),1);
- figure(2)
- imagesc(t,nn,PR)
+figure(1)
+imagesc(t,nn,PR)
 
 
 %% Get the information from the MIDIS
@@ -60,6 +46,7 @@ for i=2:s(1)
     curpat(nnotes(i))=1;
 end
 %%
+figure(2)
 imagesc(pats)
 colormap gray
 
@@ -69,7 +56,7 @@ musiclen=1000;
 
 [ub,u,bb]=unique(pats','rows');
 imagesc(ub)
-display(['Íumber of different patterns: ' num2str(max(bb))])
+display(['Number of different patterns: ' num2str(max(bb))])
 %%
 
 
@@ -93,7 +80,7 @@ bnew=mc_sample(transmat,bb,musiclen);
 % dur gives the unique cases, durbb says to which of the unique each one
 % corresponds
 [dur,duru,durbb]=unique(round(durs*100)/100);  
-display(['Íumber of different durs: ' num2str(max(durbb))])
+display(['Number of different durs: ' num2str(max(durbb))])
 
 %durbnew=mc_sample(mc_model(durbb,order),durbb,musiclen);
 %newdurs=dur(durbnew);

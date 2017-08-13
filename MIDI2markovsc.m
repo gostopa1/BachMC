@@ -65,7 +65,7 @@ for i=1:size(mat,1)
         amp=mean(vols(find(bb==i)));
 %%str1=[ '[' num2str(i) ', 0.5 , 0.8 ,['];
         
-        str1=[ '[' '[' vector2str_w_commas(find(ub(i,:))) ']' ', 0.5 , ' num2str(amp) ' ,['];
+        str1=[ '[' '[' vector2str_w_commas(find(ub(i,:))) ']' ', ' num2str(amp) ' ,['];
         for j=1:size(mat,1)
             if mat(i,j)~=0
                 ind=ind+1;
