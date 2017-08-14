@@ -9,12 +9,11 @@ Main files are the following
 
 MIDI2markov: function that performs first-order Markov Chain analysis and generates a Supercollider script for realtime MIDI message generation using Supercollider.
 
-analyze_and_make_new_midi.m
+analyze_and_make_new_midi.m: The main script that analyzes the midifile and generates a new MIDI file. Check out the code for more options like, chain-order, length of new MIDI sequence, MIDI file to use as analysis etc.
+
+make_figures: This one I made for report purposes only. You can give it a try after you run analyze_and_make_new_midi (some variables are used from that script).
 
 Check out the MIDI destination to make sure you send to the right destination. TI have put the first MIDIOut as default (m = MIDIOut(0);). In Windows this is typically the the built-in MIDIMapper that produces some sound.
-
-
-
 
 Folder description:
 ./functions/: a set of MATLAB functions required for the analysis
