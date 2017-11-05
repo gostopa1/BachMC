@@ -9,10 +9,19 @@ ind=1;
 %% Reading files
 filename='take5.mid';
 %filename='entrtanr.mid'
-filename='breezefa.mid'
+
 Notesall=[]
-for midifiles={'asturias.mid','bumble_bee.mid','bach.mid','furelise.mid','entrtanr.mid'}
-%for midifiles={'asturias.mid'}
+%for midifiles={'breezefa.mid','bumble_bee.mid','bach.mid','furelise.mid','entrtanr.mid'}
+inmidis={'bumble_bee.mid','furelise.mid','bach.mid','entrtanr.mid'}
+inmidis={'furelise.mid','bumble_bee.mid'}
+
+%inmidis={'breezefa.mid','gnossi.mid','golliwog.mid','deb_clai.mid','asturias.mid','bumble_bee.mid','bach.mid','furelise.mid','entrtanr.mid'}
+inmidis={'breezefa.mid','gnossi.mid','golliwog.mid','deb_clai.mid','asturias.mid','bumble_bee.mid','bach.mid','furelise.mid'}
+%inmidis={'furelise.mid'}
+inmidis={'arabesque.mid'}
+inmidis={'furelise.mid','bumble_bee.mid'}
+%inmidis={'gnossi.mid'}
+for midifiles=inmidis
     filename=midifiles{1};
     midi=readmidi([prefix filename]);
     
@@ -43,8 +52,8 @@ for channeli=1
         
         hist(Notes(:,1),unique(Notes(:,1)))
         title('see the good tracks')
-        musiclen=15500;
-        order=4; % Change the order of the markov chains for the note patterns
+        musiclen=1000;
+        order=2; % Change the order of the markov chains for the note patterns
         
         
         [PR,t,nn] = piano_roll(Notes(1:num_of_notes,:),1);
@@ -54,7 +63,7 @@ for channeli=1
         
         %% Get the information from the MIDIS
         data2=Notes(1:num_of_notes,3:6);
-        data=[data2];
+        data=[data2]; 
         durs=data(:,4)-data(:,3);
         durnextnote=diff(data(:,4)); durnextnote(end+1)=durnextnote(end);
         
@@ -92,13 +101,14 @@ for channeli=1
         %% Select the number of patterns to generate in the new composition
         
         
-        [ub,u,bb]=unique(pats','rows');
+        [ub,u,bb]=unique(pats','rows','stable');
         imagesc(ub)
         display(['Number of different patterns: ' num2str(max(bb))])
         %%
         
         
-        
+%        [bnew,model]=ndimensional_mc_model(bb,order,musiclen);
+
         bnew=ndimensional_mc_sample(bb,order,musiclen);
         %%
 
@@ -119,9 +129,10 @@ for channeli=1
         %% Model the durations and the velocitites as well. Change the numbers to
         %% change the number in the arguments to change the order of the MC.
         %newdurs=sample_new_ts(durs,2,musiclen);
-        newdurs=ndimensional_mc_sample(durs,order,musiclen);
+        newdurs=ndimensional_mc_sample(durs,order,musiclen)*0.75;
         %newamps=sample_new_ts(data(:,2),2,musiclen);
-        newamps=ndimensional_mc_sample(data(:,2),order,musiclen);
+        amps=data(:,2);
+        newamps=ndimensional_mc_sample(amps,order,musiclen);
 
         %% New music
         
@@ -139,10 +150,9 @@ for channeli=1
         %% Generate the MIDI matrix and then create the MIDI file based on the M
         %% matrix
         stp=Notes(1,4);
-        
-        
+        minnote=min(notes);
         for i=1:size(newmelody,1)
-            a=find(newmelody(i,:))+min(notes);
+            a=find(newmelody(i,:))+minnote;
             
             for j=1:length(a)
                 M(ind,1) = track(1);         % all in track 1
@@ -161,7 +171,8 @@ for channeli=1
     end
 end
 midi_new = matrix2midi(M);
-midi_new.ticks_per_quarter_note=midi.ticks_per_quarter_note;
+%midi_new.ticks_per_quarter_note=midi.ticks_per_quarter_note;
 %midi_new = matrix2midi(Notes);
-writemidi(midi_new, ['./resultmidis/' filename(1:end-4)  '_' num2str(order) '.mid']);
-system(['timidity ./resultmidis/' filename(1:end-4)  '_' num2str(order) '.mid'])
+outfile=[strrep(cell2mat(inmidis),'.mid','_') num2str(order) '.mid'];
+writemidi(midi_new, ['./resultmidis/' outfile ]);
+system(['timidity ./resultmidis/' outfile])
