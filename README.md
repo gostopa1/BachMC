@@ -33,4 +33,15 @@ Things to implement later:
 
 I plan to implement similar analysis in Python that will analyze and generate MIDI messages in the same environment
 
+----- 
+
+UPDATE:
+
+Realtime generation has been implemented in Python (RunRealtime_dur_amp.py). The data for the generation (transition matrices etc. are still made in MATLAB because the MIDI tooblox for MATLAB is way more convenient for me). It uses python-rtmidi and numpy.
+
+To make MIDI files purely in MATLAB run combine_and_make_new_midi.m
+To make the transition matrices to run in Python run read_MIDI_make_python_data.m
+
+The supercollider part is no longer supported.
+
 
