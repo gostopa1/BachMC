@@ -175,4 +175,5 @@ midi_new = matrix2midi(M);
 %midi_new = matrix2midi(Notes);
 outfile=[strrep(cell2mat(inmidis),'.mid','_') num2str(order) '.mid'];
 writemidi(midi_new, ['./resultmidis/' outfile ]);
-system(['timidity ./resultmidis/' outfile])
+% system(['timidity ./resultmidis/' outfile]) % You can listen to the
+% results using timidity in Linux at least
