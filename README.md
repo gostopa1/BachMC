@@ -42,6 +42,11 @@ Realtime generation has been implemented in Python (RunRealtime_dur_amp.py). The
 To make MIDI files purely in MATLAB run combine_and_make_new_midi.m
 To make the transition matrices to run in Python run read_MIDI_make_python_data.m
 
+Examples of realtime generation can be found in the following YouTube playlist:
+https://www.youtube.com/playlist?list=PLLhYA6_Y_OaK8ugjgew2DcVVlqbzWY7fo
+
 The supercollider part is no longer supported.
+
+
 
 
